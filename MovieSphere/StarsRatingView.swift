@@ -16,6 +16,7 @@ struct StarsRatingView: View {
             ForEach(0..<maxRating, id: \.self) { _ in
                 Image(systemName: "star.fill")
                     .resizable()
+                    .symbolEffect(.pulse)
                     .aspectRatio(contentMode: .fit)
             }
         }

@@ -52,7 +52,7 @@ class MovieService {
         return decodedResponse
     }
     
-    func getGenresList() async throws -> MovieList {
+    func getGenresList() async throws -> Genres {
         guard let url = URL(string: "https://api.themoviedb.org/3/genre/movie/list") else {
             fatalError("Missing URL")
         }
@@ -68,7 +68,7 @@ class MovieService {
         
         let decoder = JSONDecoder()
         
-        let decodedResponse = try decoder.decode(MovieList.self, from: data)
+        let decodedResponse = try decoder.decode(Genres.self, from: data)
         return decodedResponse
     }
 }

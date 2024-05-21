@@ -12,57 +12,59 @@ struct MovieView: View {
     
     var body: some View {
         GeometryReader { geo in
-            VStack(spacing: 10) {
-                
-                Text(viewModel.movie.title)
-                    .multilineTextAlignment(.center)
-                    .font(.title2.bold())
-                
-                Text("(\(viewModel.movie.date.formatted(.dateTime.year())))")
-                    .font(.title2)
-                    .opacity(0.7)
-                
-                
-                NavigationLink {
-                    MovieDetailView(movie: viewModel.movie)
-                } label: {
-                    AsyncImage(url: URL(string: viewModel.movie.posterURL)) { image in
-                        image.resizable()
-                            .scaledToFit()
-                            .frame(height: geo.size.height/1.8)
+            ZStack {
+                AsyncImage(url: URL(string: viewModel.movie.posterURL)) { image in
+                    image
+                        .resizable()
+                        .blur(radius: 80)
+                        .opacity(0.6)
+                    
+                } placeholder: {
+                    ProgressView()
+                        .frame(width: geo.size.width, height: geo.size.height)
                         
-                    } placeholder: {
-                        ProgressView()
+                }
+                
+                VStack{
+                    
+                    Text(viewModel.movie.title)
+                        .multilineTextAlignment(.center)
+                        .font(.title2.bold())
+                    
+                    
+                    Text("(\(viewModel.movie.date.formatted(.dateTime.year())))")
+                        .font(.title3)
+                        .opacity(0.7)
+                    
+                    
+                    NavigationLink {
+                        MovieDetailView(movie: viewModel.movie)
+                    } label: {
+                        AsyncImage(url: URL(string: viewModel.movie.posterURL)) { image in
+                            image.resizable()
+                                .scaledToFit()
+                                .frame(height: geo.size.height/1.7)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            
+                        } placeholder: {
+                            ProgressView()
+                                .frame(height: geo.size.height/1.7)
+                        }
                     }
                     
-                }
-                
-                HStack {
-                    Text(viewModel.movie.date.formatted(date: .abbreviated, time: .omitted))
-                    Text("(\(viewModel.movie.originalLanguageUppercased))")
-                }
-                .font(.subheadline)
-                
-                
-                RatingView(rating: viewModel.movie.usersRating)
-                
-                VStack(alignment: .leading) {
-                    Text("Overview")
-                        .font(.title3)
                     
-                    Text(viewModel.movie.overview)
-                        .multilineTextAlignment(.leading)
-                        .font(.callout)
-                        .truncationMode(.tail)
+                    Text(viewModel.movie.movieGenres)
+                    
+                    RatingView(rating: viewModel.movie.usersRating)
+                        .padding()
                 }
                 .padding()
+            .preferredColorScheme(.dark)
             }
-            .padding()
-        .preferredColorScheme(.dark)
         }
     }
 }
 
 #Preview {
-    MovieView(viewModel: MovieViewModel(movie: previewMovies.results[14]))
+    MovieView(viewModel: MovieViewModel(movie: previewMovies.results[16]))
 }

@@ -46,12 +46,32 @@ struct MovieModel: Codable {
         return roundedPercentage
     }
     
-    //func getGenresList()
+    var movieGenres: String {
+        getMovieGenres(from: genreIds)
+    }
+    
+    func getMovieGenres(from ids: [Int]) -> String {
+        let filteredGenres = GenresResponseBody.data.genres.filter { ids.contains($0.id)}
+        var genres = filteredGenres.map { $0.name }
+        
+        while genres.count > 3 {
+            genres.removeLast()
+        }
+        
+        return genres.joined(separator: ", ")
+    }
     
 }
 
-struct MovieList: Codable {
+
+
+struct GenresResponseBody: Codable {
+    static let data: Genres = Decoder.load("movieGenreData.json")
+}
+
+struct Genres: Codable {
     let genres: [MovieGenre]
+
 }
 
 struct MovieGenre: Codable {

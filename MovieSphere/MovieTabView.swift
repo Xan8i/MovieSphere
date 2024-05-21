@@ -13,7 +13,10 @@ struct MovieTabView: View {
     var body: some View {
         NavigationStack {
             if let movies = viewModel.movies {
-                MoviesListView(movies: movies)
+                VStack {
+                    MoviesListView(movies: movies)
+                }
+                .ignoresSafeArea()
             } else {
                 LoadingView()
                     .task {

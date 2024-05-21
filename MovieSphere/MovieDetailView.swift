@@ -17,9 +17,14 @@ struct MovieDetailView: View {
                     AsyncImage(url: URL(string: movie.backdropURL)) { image in
                         image
                             .resizable()
-                            .opacity(0.3)
-                            .shadow(color: .black, radius: 7)
-                        
+                            .scaledToFit()
+                            .opacity(0.7)
+                            .overlay {
+                                LinearGradient(stops: [
+                                    Gradient.Stop(color: .clear, location: 0.7),
+                                    Gradient.Stop(color: .black, location: 1)
+                                ], startPoint: .top, endPoint: .bottom)
+                            }
                     } placeholder: {
                         ProgressView()
                     }
@@ -27,7 +32,7 @@ struct MovieDetailView: View {
                     
                     VStack(alignment: .leading) {
                         Spacer()
-                            .frame(height: geo.size.height/10)
+                            .frame(height: geo.size.height/5)
                         
                         HStack(alignment: .center) {
                             AsyncImage(url: URL(string: movie.posterURL)) { image in
@@ -39,49 +44,55 @@ struct MovieDetailView: View {
                                 ProgressView()
                             }
                             .scaledToFit()
-                            .frame(width: 150)
-                            .padding()
+                            .frame(width: geo.size.width/2)
+                            .shadow(color: .black, radius: 20)
+                            .padding(10)
                             
                             
-                            VStack(alignment: .leading) {
-                                VStack {
-                                    Text(movie.title)
-                                        .multilineTextAlignment(.leading)
-                                        .font(.title.bold())
-                                    Text("(\(movie.date.formatted(.dateTime.year())))")
-                                        .font(.title2)
-                                        .opacity(0.7)
-                                }
-                                
-                                HStack {
-                                    Text(movie.date.formatted(date: .numeric, time: .omitted))
-                                    Text("(\(movie.originalLanguageUppercased))")
-                                }
-                                .font(.subheadline)
-                                
-                                RatingView(rating: movie.usersRating)
-         
-                            }
+                            Text(movie.title)
+                                .multilineTextAlignment(.leading)
+                                .font(.title2.bold())
                         }
+                        .padding(.trailing)
                         
                         VStack(alignment: .leading) {
+                            HStack {
+                                Text(movie.date.formatted(date: .numeric, time: .omitted))
+                                Text("(\(movie.originalLanguageUppercased))")
+                            }
+                            .font(.title3)
+                            
+                            RatingView(rating: movie.usersRating)
+                                .padding([.top, .bottom])
+                            
                             Text("Overview")
                                 .font(.title3)
                             
                             Text(movie.overview)
-                                .multilineTextAlignment(.leading)
                                 .font(.callout)
-                                .truncationMode(.tail)
+                                .multilineTextAlignment(.leading)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                         .padding()   
                     }
                 }
             }
+            .background(AsyncImage(url: URL(string: movie.posterURL)) { image in
+                image
+                    .resizable()
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .blur(radius: 80)
+                    .opacity(0.6)
+                
+            } placeholder: {
+                ProgressView()
+            })
+            .ignoresSafeArea()
             .preferredColorScheme(.dark)
         }
     }
 }
 
 #Preview {
-    MovieDetailView(movie: previewMovies.results[1])
+    MovieDetailView(movie: previewMovies.results[3])
 }
