@@ -24,4 +24,6 @@ SwiftUI application that gets and displays movie lists as well as specific data 
 - Tab Views
 - Scroll View
   
-![Simulator Screenshot - iPhone 15 Pro - 2024-05-21 at 22 28 23](https://github.com/Xan8i/MovieSphere/assets/155832469/61d07149-18b7-40af-9221-6b00ea7b40c5) ![Simulator Screenshot - iPhone 15 Pro - 2024-05-21 at 22 28 33](https://github.com/Xan8i/MovieSphere/assets/155832469/18adb4f8-03e8-4c98-bb48-bbd03c2c594d)
+<img src="https://github.com/Xan8i/MovieSphere/assets/155832469/88beda38-d2aa-4507-8ae6-37636d4cf432" width="250"> <img src="https://github.com/Xan8i/MovieSphere/assets/155832469/0d12c79f-0014-4410-9eda-06c9825baceb" width="250">
+
+
